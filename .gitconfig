@@ -1,0 +1,40 @@
+[user]
+	name = Beau Collins
+	email = beau@collins.pub
+	signingkey = 7F58B13F
+[alias]
+	browse = "!gh browse"
+	issues = "!ghi"
+	fork = "!gh fork"
+	hub = "!gh"
+	pr = "!gh pr"
+	ci-status = "!gh ci-status"
+	foo="rebase origin/main"
+	bb = "!f() { gh browse }; f"
+	delete-squashed = "!f() { local targetBranch=${1:-master} && git checkout -q $targetBranch && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done; }; f"
+	pending = "!f() { git fetch > /dev/null; local name=${1:-app.commonroom.io}; echo \"Waiting for deploy on $name\" >&2 ; git log --pretty=oneline origin/main...`gh api -X GET /repos/common-room/sparta/deployments -f \"environment=$name\" --jq \".[0].ref\"`; }; f"
+[github]
+	user = beaucollins
+[ghi]
+	token = !security find-internet-password -a beaucollins -s github.com -l 'ghi token' -w
+[core]
+	editor = code -w -r
+	excludesFile = ~/.gitignore
+[commit]
+	gpgsign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[fetch]
+	prune = true
+[pull]
+	ff = only
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
+[includeIf "gitdir:~/code/common-room/"]
+	path = ~/code/common-room/.gitconfig
+
