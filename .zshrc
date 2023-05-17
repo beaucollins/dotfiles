@@ -141,4 +141,7 @@ alias sparta="~/code/common-room/sparta/sparta.code-workspace"
 
 alias dot='/usr/bin/git --git-dir=/Users/beau/.dotfiles/ --work-tree=/Users/beau'
 
-source /Users/beau/.zshrc_local
+# Include local configuration
+if [[ -r "${HOME}/.zshrc_local" ]]; then
+  source "${HOME}/.zshrc_local"
+fi
