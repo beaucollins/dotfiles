@@ -1,7 +1,7 @@
 [user]
 	name = Beau Collins
 	email = beau@collins.pub
-	signingkey = 7F58B13F
+	signingkey = E67B9CE1
 [alias]
 	browse = "!gh browse"
 	issues = "!ghi"
